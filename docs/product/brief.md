@@ -35,3 +35,5 @@ Floating rate simulator; "how much corpus?" essay; rent vs buy explorer; custom 
 ## Process
 
 Agree what the essay should make a reader understand, then draft the prose. Components come from the prose. Each component is designed in Paper (all states), built and tested in Storybook, then composed into the published essay. Work is tracked in Linear; Done requires the owner's acceptance.
+
+Linear project: https://linear.app/meatigo/project/home-loan-essay-2337af57bffa (Side projects team, `SID`).
