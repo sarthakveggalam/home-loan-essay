@@ -28,6 +28,10 @@ Indian home buyers. Indian interest rates, rupee amounts with lakh/crore groupin
 - [ ] Deployed to a live public URL.
 - [ ] A 15-second screen recording for portfolio/social.
 
+## Still being refined
+
+- **Visual storytelling for community quotes.** Real r/personalfinanceindia comments run through the essay. They're static cards for now; the owner wants a more visually appealing storytelling view (probably animated cards). Tracked in [SID-9](https://linear.app/meatigo/issue/SID-9/explore-a-visual-storytelling-view-for-community-quotes). The essay keeps its current structure meanwhile.
+
 ## Parked for later
 
 Floating rate simulator; "how much corpus?" essay; rent vs buy explorer; custom lump-sum prepayments; tax implications; shareable state in the URL.

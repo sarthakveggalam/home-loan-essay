@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draft 2 — "EMI will be very comfortable"</title>
+<style>
+  :root {
+    --ink: #1d1b18; --muted: #6f6a62; --rule: #e4dfd6; --paper: #fbf9f5;
+    --input: #1f5fbf; --output: #1d1b18; --note: #f3efe6; --flag: #a4471c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font: 19px/1.6 "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-variant-numeric: tabular-nums; }
+  .review-bar { position: sticky; top: 0; z-index: 2; background: #fff; border-bottom: 1px solid var(--rule);
+    font: 13px/1.4 -apple-system, system-ui, sans-serif; padding: 10px 24px;
+    display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; }
+  .review-bar strong { font-weight: 600; }
+  .review-bar label { display: flex; gap: 8px; align-items: center; color: var(--muted); }
+  .review-bar output { color: var(--ink); min-width: 7ch; display: inline-block; }
+  .review-bar .hint { color: var(--muted); margin-left: auto; }
+  .page { max-width: 1120px; margin: 0 auto; padding: 48px 24px 120px; }
+  header { max-width: 640px; margin-bottom: 40px; }
+  h1 { font-size: 40px; line-height: 1.15; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .dek { color: var(--muted); font-size: 20px; margin: 0; }
+  .legend { font: 13px/1.5 -apple-system, system-ui, sans-serif; color: var(--muted); margin-top: 20px; }
+  .row { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 360px); gap: 56px; margin-bottom: 36px; }
+  .row p { margin: 0; }
+  .in { color: var(--input); border-bottom: 1.5px dashed currentColor; white-space: nowrap; }
+  .out { font-weight: 600; white-space: nowrap; }
+  .chart { height: 220px; border: 1px dashed var(--rule); border-radius: 6px; display: grid; place-items: center;
+    color: var(--muted); font: 14px/1.4 -apple-system, system-ui, sans-serif; text-align: center; padding: 16px; margin-top: 24px; }
+  aside { font: 13.5px/1.5 -apple-system, system-ui, sans-serif; color: #3e3a34; background: var(--note);
+    border-radius: 6px; padding: 14px 16px; align-self: start; }
+  aside h3 { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  aside ul { margin: 6px 0 0; padding-left: 18px; }
+  aside li { margin-bottom: 4px; }
+  aside .live { color: var(--flag); font-weight: 600; }
+  .closing { font-style: italic; }
+  .row > div > p + p, .row > div > figure + p { margin-top: 16px; }
+  .quote { margin: 20px 0; padding: 12px 16px; background: #f1eee8; border-radius: 6px; font: 15px/1.5 -apple-system, system-ui, sans-serif; }
+  .quote blockquote { margin: 0; }
+  .quote figcaption { margin-top: 6px; font-size: 12px; }
+  .quote a, footer a { color: var(--muted); }
+  footer { max-width: 640px; font: 13px/1.5 -apple-system, system-ui, sans-serif; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; gap: 16px; } }
+</style>
+</head>
+<body>
+
+<div class="review-bar">
+  <strong>Review panel</strong>
+  <label>Loan <input id="amt" type="range" min="1000000" max="30000000" step="100000" value="5000000"><output id="amtO"></output></label>
+  <label>Rate <input id="rate" type="range" min="6" max="12" step="0.05" value="7.5"><output id="rateO"></output></label>
+  <label>Tenure <input id="ten" type="range" min="5" max="30" step="1" value="20"><output id="tenO"></output></label>
+  <span class="hint">Not the design. These sliders only test whether the copy holds at other values.</span>
+</div>
+
+<div class="page">
+  <header>
+    <h1>“EMI will be very comfortable”</h1>
+    <p class="dek">A short essay about home loans, where your money actually goes, and how to leave early.</p>
+    <p class="legend"><span class="in">Blue dashed</span> = a number the reader will drag. <span class="out">Bold</span> = a number that updates live. Grey cards = real comments from r/personalfinanceindia (anonymised, linked). Draft 2, 18 Nov 2026.</p>
+  </header>
+
+  <!-- Beat 0 -->
+  <div class="row">
+    <div>
+      <p>In India, a house isn’t an asset class. It’s a milestone your family keeps quietly checking on, somewhere between your marriage and your parents’ retirement. Rent is “paying someone else’s EMI.” A flat is “settling down.” Every relative has a cousin who bought in 2009 and is now, apparently, a crorepati. So you do the spreadsheet, rent comes out ahead, and you buy the flat anyway, because the spreadsheet doesn’t come to Sunday lunch.</p>
+      <figure class="quote"><blockquote>Rent v buy sheets won’t help with the parents generation.</blockquote><figcaption><a href="https://www.reddit.com/r/personalfinanceindia/comments/161cbdm/parents_pressuring_me_into_buying_a_house/">r/personalfinanceindia · “Parents pressuring me into buying a house”</a></figcaption></figure>
+    </div>
+    <aside>
+      <h3>Beat 0 · The house as a milestone (new)</h3>
+      The Indian “own house” mindset. It explains <em>why</em> people sign without reading, so the essay is on the reader’s side from the start.
+      <ul>
+        <li>No live numbers. Plain prose to ease the reader in.</li>
+        <li>“Paying someone else’s EMI” and “settling down” are common sayings, not quotes from a specific post.</li>
+        <li>Other real thread titles to choose from: “Parents Want Me to Take a 40L Loan at 22, Feeling Pressured and Conflicted”; “Parents forced to buy a house and now I lost my freedom”.</li>
+        <li>The joke is at the expense of the family dinner table, not the reader.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Beat 1 -->
+  <div class="row">
+    <p>So here you are, at the bank. A relationship manager slides the papers across the desk and says the most expensive sentence in Indian personal finance: <em>“EMI will be very comfortable.”</em> Say you’re borrowing <span class="in" data-k="amount"></span> at <span class="in" data-k="rate"></span> for <span class="in" data-k="tenure"></span>. Your EMI is <span class="out" data-k="emi"></span> a month. Comfortable. You say yes in about four seconds. Everyone does.</p>
+    <aside>
+      <h3>Beat 1 · “EMI will be very comfortable”</h3>
+      Sets up the reader’s own loan. All three inputs live here so the rest of the essay is about <em>their</em> numbers.
+      <ul>
+        <li>Components: 3 scrubbable numbers, 1 live output.</li>
+        <li>“Four seconds” is borrowed from a borrower’s post on Butter’s forum (“I said yes in about four seconds”). It’s a nod, not a quote.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Beat 2 -->
+  <div class="row">
+    <p>Here’s the receipt nobody prints at signing. Over <span class="out" data-k="tenureWords"></span>, you’ll pay the bank <span class="out" data-k="totalInterest"></span> in interest, <span data-k="interestVerdict"></span> For every ₹1 you borrowed, you hand back <span class="out" data-k="perRupee"></span>. <span data-k="interestJoke"></span></p>
+    <aside>
+      <h3>Beat 2 · The receipt</h3>
+      Total interest, and interest as a share of the loan.
+      <ul>
+        <li>Conditional copy (now showing: <span class="live" data-k="interestBand"></span>):
+          <br>≥ 100% of loan → “more than the loan itself… another flat for the bank”
+          <br>75–99% → “almost as much as the loan… most of a second flat”
+          <br>&lt; 75% → “X% of the loan… a very nice car for the bank”</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Beat 3 -->
+  <div class="row">
+    <div>
+      <p>Now the strange part. Of your very first EMI, <span class="out" data-k="firstInterest"></span> (<span class="out" data-k="firstShare"></span>) is interest. Only <span class="out" data-k="firstPrincipal"></span> pays off the loan. Two years in, you’ll have paid <span class="out" data-k="int24"></span> in interest and just <span class="out" data-k="prin24"></span> of principal. That’s usually when people open their repayment schedule for the first time, stare at it, and post on Reddit.</p>
+      <figure class="quote"><blockquote>I took a ₹58L home loan 2 years ago at 7.25%. So far I’ve paid roughly ₹8L in interest and only ₹2.5L towards principal.</blockquote><figcaption><a href="https://www.reddit.com/r/personalfinanceindia/comments/1u2a65c/need_advice_on_home_loan_prepayment/">r/personalfinanceindia · “Need advice on home loan prepayment”</a></figcaption></figure>
+      <p>It isn’t a scam; it’s arithmetic. Interest is charged on what you still owe, and at the start you owe almost everything. Your EMI never changes, but the split inside it shifts, slowly. <span data-k="crossSentence"></span></p>
+      <div class="chart">Chart goes here: principal vs interest in each EMI across the loan,<br>with a marker at the crossover month.</div>
+    </div>
+    <aside>
+      <h3>Beat 3 · Two years in</h3>
+      The core insight: interest is front-loaded. The quote shows a real borrower hit exactly this. Our model gives ₹8.2L and ₹2.8L for their loan, so the numbers line up.
+      <ul>
+        <li>Components: 5 live outputs, the chart, crossover marker.</li>
+        <li>Conditional copy (now showing: <span class="live" data-k="crossBand"></span>): crossover in month 1 (short loans) gets its own sentence.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Beat 4 -->
+  <div class="row">
+    <div>
+      <p>The oldest advice on r/personalfinanceindia is <em>pay a little extra, every year</em>, and it comes in two flavours. Use your Diwali bonus to pay <span class="in">one extra EMI</span> a year, and the loan ends in <span class="out" data-k="xYears"></span> instead of <span data-k="tenureWords2"></span>, saving <span class="out" data-k="xSaved"></span>. Or raise your EMI by <span class="in">5%</span> every year when your appraisal comes through, and it ends in <span class="out" data-k="sYears"></span>, saving <span class="out" data-k="sSaved"></span>. Do both, like the subreddit tells you to, and you’re done in <span class="out" data-k="bYears"></span>, <span class="out" data-k="bSaved"></span> richer.</p>
+      <figure class="quote"><blockquote>One simple way of reducing your home loan tenure is by increasing your emi by 5 percent every year and paying one extra installment every year.</blockquote><figcaption><a href="https://www.reddit.com/r/personalfinanceindia/comments/16aezil/how_to_get_rid_of_home_loan_in_23_yearspls/">r/personalfinanceindia · “How to get rid of home loan in 2-3 years”</a></figcaption></figure>
+      <p>Early money works hardest: every rupee of principal you clear in the first few years stops collecting interest for all the years that remain.</p>
+    </div>
+    <aside>
+      <h3>Beat 4 · The folk rule</h3>
+      Both strategies, plus the combination, which is the actual r/PFI advice (quoted).
+      <ul>
+        <li>Components: prepayment controls (presentation still open), chart shows the shorter loan.</li>
+        <li>The quote sits between the numbers and the explanation, so the community says it before we explain why it works.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Beat 5 -->
+  <div class="row">
+    <div>
+      <p>Before you throw every rupee at the bank, a 2026 reality check. You’re signing a <span class="out" data-k="tenureWords3"></span> commitment in an industry where restructuring now arrives as a calendar invite. TCS alone cut 23,460 people in FY26, and staffing firm TeamLease expects another 25,000–35,000 “silent layoffs” in Indian tech this year, the kind with no announcement. The subreddit knows it.</p>
+      <figure class="quote"><blockquote>My biggest fear isn’t the EMI itself—it’s what if I lose my job tomorrow?</blockquote><figcaption><a href="https://www.reddit.com/r/personalfinanceindia/comments/1upn9om/anyone_else_terrified_of_taking_a_home_loan_even/">r/personalfinanceindia · “Anyone else terrified of taking a home loan…”</a></figcaption></figure>
+      <p>A prepaid rupee is a rupee you can’t get back when you need it. So build the cushion first: six months of EMIs is <span class="out" data-k="cushion"></span>, kept somewhere boring and liquid, before a single rupee goes to prepayment. A loan you paid off slowly beats one you can’t pay at all. Get the cushion right, and prepaying stops being a gamble.</p>
+    </div>
+    <aside>
+      <h3>Beat 5 · The 2026 caveat (new)</h3>
+      Layoffs context. It doesn’t contradict beat 4; it puts the emergency fund ahead of prepaying.
+      <ul>
+        <li>New live output: 6 × EMI. No new control. (An emergency-fund calculator belongs to the parked “How much corpus?” essay.)</li>
+        <li>Tone: the joke is at the industry (“calendar invite”), never at people who lost jobs.</li>
+        <li>Facts: TCS headcount fell by 23,460 in FY26 (company figures, reported by ET); TeamLease’s 25,000–35,000 estimate (via ET/Times of India). Re-check before publishing.</li>
+        <li>Other real thread title: “With what guarantee are IT people buying home with loans?”</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Beat 6 -->
+  <div class="row">
+    <div>
+      <p>Cushion built? Then three things before you open your banking app. When you prepay, the bank will ask whether to cut your EMI or your tenure. Say <em>tenure</em>, then check the new schedule, because some banks don’t update it on their own.</p>
+      <figure class="quote"><blockquote>They automatically lower your EMI and increase the tenure. Make sure to call your bank and tell them explicitly to lower the tenure.</blockquote><figcaption><a href="https://www.reddit.com/r/personalfinanceindia/comments/1ijp5zi/the_rbis_recent_repo_rate_cut_is_great_news_for/">r/personalfinanceindia · on the RBI repo rate cut</a></figcaption></figure>
+      <p>Check the minimum prepayment, too; some lenders want ₹1 lakh or a few EMIs at a time. And wondering whether to invest the money instead? <span data-k="ruleSentence"></span></p>
+    </div>
+    <aside>
+      <h3>Beat 6 · Call your bank</h3>
+      Practical takeaways, the way the subreddit gives them.
+      <ul>
+        <li>Conditional copy (now showing: <span class="live" data-k="ruleBand"></span>): the r/PFI “above 70% interest, prepay” rule of thumb, applied to the reader’s first EMI.</li>
+        <li>Edges towards advice. Footer disclaimer stays.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <div class="row">
+    <div>
+      <p class="closing">There is, of course, a worse version of this story, where the rate goes up, your EMI stays put, and your loan quietly gets longer.</p>
+      <figure class="quote"><blockquote>The interest rate has increased from 6.9% to 9.2%. Due to this the tenure of the loan was increased from 20 years to 75 years.</blockquote><figcaption><a href="https://www.reddit.com/r/personalfinanceindia/comments/1avcnke/home_loan_tenure_increased/">r/personalfinanceindia · “Home Loan Tenure increased”</a></figcaption></figure>
+      <p class="closing">But that’s another essay.</p>
+    </div>
+    <aside>
+      <h3>Closing · Teaser</h3>
+      The 75-year loan, in the borrower’s own words. Sets up the V2 floating-rate essay.
+    </aside>
+  </div>
+
+  <footer>Illustrative numbers: fixed rate, monthly reducing balance, prepayments at the end of each loan year, no fees or tax effects. Not financial advice. Quotes are short excerpts from public r/personalfinanceindia posts, shown without usernames. Layoff figures: <a href="https://m.economictimes.com/tech/technology/over-93000-jobs-cut-in-tech-so-far-in-2026-as-ai-drives-cuts-at-freshworks-coinbase-others/articleshow/130879634.cms">Economic Times</a>, <a href="https://timesofindia.indiatimes.com/business/india-business/silent-layoffs-around-35000-tech-jobs-may-be-eliminated-this-year-indias-it-sector-sees-ai-shift/articleshow/132281010.cms">Times of India</a>.</footer>
+</div>
+
+
+<script>
+const $ = (id) => document.getElementById(id);
+const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+const lakhs = (n) => n >= 1e7 ? `₹${+(n / 1e7).toFixed(2)} crore` : `₹${+(n / 1e5).toFixed(1)} lakh`;
+const yrs = (months) => {
+  const y = Math.floor(months / 12), m = months % 12;
+  return [y && `${y} year${y > 1 ? "s" : ""}`, m && `${m} month${m > 1 ? "s" : ""}`].filter(Boolean).join(" ");
+};
+
+function simulate(P, rate, years, { extraEmi = false, step = 0 } = {}) {
+  const r = rate / 1200, n = years * 12;
+  const emi = P * r * (1 + r) ** n / ((1 + r) ** n - 1);
+  let bal = P, m = 0, interest = 0, cross = null, pay = emi, int24 = 0, prin24 = 0;
+  while (bal > 0.5 && m < 1200) {
+    m++;
+    if (step && m > 1 && (m - 1) % 12 === 0) pay *= 1 + step;
+    const i = bal * r, p = Math.min(pay - i, bal);
+    bal -= p; interest += i;
+    if (m <= 24) { int24 += i; prin24 += p; }
+    if (cross === null && p > i) cross = m;
+    if (extraEmi && m % 12 === 0 && bal > 0) bal -= Math.min(emi, bal);
+  }
+  return { emi, months: m, interest, cross, int24, prin24 };
+}
+
+function render() {
+  const P = +$("amt").value, R = +$("rate").value, T = +$("ten").value;
+  $("amtO").value = lakhs(P); $("rateO").value = R.toFixed(2) + "%"; $("tenO").value = T + " yrs";
+
+  const base = simulate(P, R, T);
+  const x = simulate(P, R, T, { extraEmi: true });
+  const s = simulate(P, R, T, { step: 0.05 });
+  const b = simulate(P, R, T, { extraEmi: true, step: 0.05 });
+  const ratio = base.interest / P;
+  const firstI = P * R / 1200, share = firstI / base.emi;
+
+  let interestVerdict, interestJoke, interestBand;
+  if (ratio >= 1) {
+    interestBand = "≥ 100%";
+    interestVerdict = "which is more than the loan itself.";
+    interestJoke = "You’re buying your flat, and then buying the bank another one.";
+  } else if (ratio >= 0.75) {
+    interestBand = "75–99%";
+    interestVerdict = "which is almost as much as the loan itself.";
+    interestJoke = "You’re buying your flat, and most of a second one for the bank.";
+  } else {
+    interestBand = "< 75%";
+    interestVerdict = `which is ${Math.round(ratio * 100)}% of what you borrowed.`;
+    interestJoke = "Not a second flat for the bank, but a very nice car.";
+  }
+
+  const crossSentence = base.cross === 1
+    ? "In your case, more of every EMI goes to the loan than to interest from day one. Short loans are like that; enjoy it."
+    : `You finally pay more principal than interest in month ${base.cross}, about ${yrs(base.cross)} in. By then you’ll have changed phones at least ${Math.max(1, Math.floor(base.cross / 30))} time${Math.floor(base.cross / 30) > 1 ? "s" : ""}.`;
+
+  const ruleSentence = share > 0.7
+    ? `The subreddit’s rule of thumb: if more than 70% of your EMI is interest, prepay. Yours starts at ${Math.round(share * 100)}%. Once your cushion is in place, every rupee you prepay earns a guaranteed ${R}%, with zero drama.`
+    : `The subreddit’s rule of thumb: if more than 70% of your EMI is interest, prepay. Yours starts at ${Math.round(share * 100)}%, so it’s a closer call: compare ${R}% with what you’d realistically earn after tax.`;
+
+  const v = {
+    amount: lakhs(P), rate: R.toFixed(2).replace(/\.?0+$/, "") + "%", tenure: T + " years",
+    emi: inr(base.emi), tenureWords: T + " years", tenureWords2: T + " years", tenureWords3: T + "-year", cushion: lakhs(base.emi * 6),
+    totalInterest: lakhs(base.interest), interestVerdict, interestJoke, interestBand,
+    perRupee: "₹" + (1 + ratio).toFixed(2),
+    firstInterest: inr(firstI), firstShare: Math.round(share * 100) + "%", firstPrincipal: inr(base.emi - firstI),
+    int24: lakhs(base.int24), prin24: lakhs(base.prin24),
+    crossSentence, crossBand: base.cross === 1 ? "crossover in month 1" : "crossover later",
+    xYears: yrs(x.months), xSaved: lakhs(base.interest - x.interest),
+    sYears: yrs(s.months), sSaved: lakhs(base.interest - s.interest),
+    bYears: yrs(b.months), bSaved: lakhs(base.interest - b.interest),
+    ruleSentence, ruleBand: share > 0.7 ? "above 70%" : "70% or below",
+  };
+  document.querySelectorAll("[data-k]").forEach((el) => { el.textContent = v[el.dataset.k]; });
+}
+
+["amt", "rate", "ten"].forEach((id) => $(id).addEventListener("input", render));
+render();
+</script>
+</body>
+</html>
