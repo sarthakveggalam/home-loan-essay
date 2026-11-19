@@ -181,6 +181,8 @@ export function ScrubbableNumber({
   return (
     <NumberField.Root
       ref={rootRef}
+      // A <span>, not Base UI's default <div>, so the token can sit inside a sentence's <p>.
+      render={<span />}
       className="sn-root"
       data-editing={editing || undefined}
       value={display}
@@ -213,9 +215,11 @@ export function ScrubbableNumber({
           {unit.label && <span className="sn-unit"> {unit.label}</span>}
         </span>
         {/* Drawn in place of the locked pointer while dragging (not in Safari, which keeps the native cursor). */}
+        {/* A dark pill with white arrows: has to stand out against text it often sits on. */}
         <NumberField.ScrubAreaCursor className="sn-cursor">
-          <svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true">
-            <path d="M1 7h24M1 7l5-5M1 7l5 5M25 7l-5-5M25 7l-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <svg width="36" height="22" viewBox="0 0 36 22" aria-hidden="true">
+            <rect x="1" y="1" width="34" height="20" rx="10" fill="#111" stroke="#fff" strokeWidth="1.5" />
+            <path d="M9 11h18M9 11l4-4M9 11l4 4M27 11l-4-4M27 11l-4 4" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </NumberField.ScrubAreaCursor>
       </NumberField.ScrubArea>
@@ -243,7 +247,7 @@ export function ScrubbableNumber({
         )}
       </span>
       {presets && (
-        <div
+        <span
           className="sn-presets"
           data-open={presetsOpen || undefined}
           aria-hidden={!presetsOpen}
@@ -263,7 +267,7 @@ export function ScrubbableNumber({
               {new Intl.NumberFormat(locale, unit.format).format(p / unit.factor)}
             </button>
           ))}
-        </div>
+        </span>
       )}
     </NumberField.Root>
   );

@@ -74,11 +74,12 @@
   font-weight: bold;
 }
 
-/* Drag cursor. Base UI positions it (position: fixed) and moves it with the pointer. */
+/* Drag cursor. Base UI positions it (position: fixed), centres it on the pointer
+   and moves it, so no offset here. line-height: 0 keeps the box the size of the SVG,
+   which Base UI needs to centre it correctly. */
 .sn-cursor {
   z-index: 1000;
-  translate: -50% -50%;
-  filter: drop-shadow(0 0 1px Canvas) drop-shadow(0 0 1px Canvas);
+  line-height: 0;
 }
 
 /* Safari keeps the real pointer: hold the ↔ cursor everywhere while dragging. */

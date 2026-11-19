@@ -17,6 +17,7 @@ Every component iteration is frozen in Storybook under **Iterations/**, so you c
 |---|---|---|
 | Scrubbable number 01 · P3 first build | `Iterations/Scrubbable number/01 · P3 first build` | 7 |
 | Scrubbable number 02 · Drag cursor, pickable values | `Iterations/Scrubbable number/02 · Drag cursor, pickable values` | 8 |
+| Scrubbable number 03 · Visible drag handle | `Iterations/Scrubbable number/03 · Visible drag handle` | 9 |
 
 How a snapshot is made: when an iteration closes, copy the component into `src/iterations/<component>/<nn-name>/`, rename its CSS classes with a version prefix (`sn02-`) so versions don't clash on one page, mark it frozen, and add a story. Snapshot 01 was rebuilt after the fact by reversing the R10 changes, because the first commit already included them.
 
@@ -128,6 +129,20 @@ How a snapshot is made: when an iteration closes, copy the component into `src/i
 
 **Evidence:** Storybook `Iterations/Scrubbable number/02`. A test checks that picking ₹75,00,000 from the strip sets the value, and that a double-click doesn't leave the strip open.
 
+## 9 · The handle you couldn't see · 2026-11-19
+
+**Tried:** The designer dragged iteration 02 in Storybook: "As I'm dragging, I don't see the drag handle."
+
+**Learned:**
+- Headless browsers refuse the pointer lock and fall back to the native cursor, so the automated tests never saw the bug. Reproducing it needed a visible browser window.
+- The cursor *was* drawn. It was a thin black arrow, the size of the text, sitting on top of black digits, so it vanished. A cursor drawn over text has to contrast with text.
+- An extra CSS offset pushed it off the pointer; Base UI already centres it.
+- Unrelated, found on the way: the token rendered a `<div>` inside the sentence's `<p>`, which is invalid HTML.
+
+**Decided:** the cursor is now a dark pill with white arrows, so it reads as a handle. The extra offset is gone. The token's root renders as a `<span>`.
+
+**Evidence:** Storybook `Iterations/Scrubbable number/03`. ![Before: the cursor lost in the digits](assets/2026-11-19-03-before-invisible-cursor.png)
+
 ---
 
 ## Case-study threads so far
@@ -138,4 +153,5 @@ Threads worth pulling on when this becomes a write-up:
 - **Pushback that narrowed scope.** ₹ ↔ $ was dropped from the essay but kept in the component.
 - **A platform constraint that drove design.** Pointer lock shaped both the double-click logic and the sticky values strip.
 - **Copy as a state space.** Reactive jokes have to hold at every input, not just the default.
+- **Tests can't feel.** The invisible cursor passed every automated test, because headless browsers never lock the pointer. Only a person dragging found it.
 - **The thinking tool itself.** tldraw had no read-back, so the Q&A moved to a Paper board.

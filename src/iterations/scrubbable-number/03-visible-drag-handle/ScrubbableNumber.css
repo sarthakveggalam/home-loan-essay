@@ -1,0 +1,100 @@
+/* FROZEN iteration snapshot. Don't edit. */
+/*
+ * Structural CSS only: what the behaviour needs to work.
+ * Colours, type, the "adjustable" hint (R1) and motion are yours to design.
+ */
+
+.sn03-root {
+  position: relative;
+  display: inline-flex;
+  font-variant-numeric: tabular-nums; /* digits keep one width while scrubbing */
+}
+
+.sn03-scrub {
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Placeholder hint so the token is findable while unstyled. Replace it. */
+.sn03-display {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+/* Keyboard focus is on the hidden input; show it on the token instead. */
+.sn03-root:has(.sn03-input:focus-visible):not([data-editing]) .sn03-display {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+/* At rest: the display shows, the input is visually hidden but focusable. */
+.sn03-editor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Editing: swap them. */
+.sn03-root[data-editing] .sn03-scrub {
+  display: none;
+}
+.sn03-root[data-editing] .sn03-editor {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25em;
+}
+
+.sn03-input {
+  font: inherit;
+  width: 10ch;
+}
+
+/* Presets (R9): open on drag and stay open after release, so values can be picked. */
+.sn03-presets {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  display: none;
+  gap: 0.25em;
+  white-space: nowrap;
+  font-size: 0.75em;
+}
+.sn03-presets[data-open] {
+  display: flex;
+}
+.sn03-presets [data-current] {
+  font-weight: bold;
+}
+
+/* Drag cursor. Base UI positions it (position: fixed), centres it on the pointer
+   and moves it, so no offset here. line-height: 0 keeps the box the size of the SVG,
+   which Base UI needs to centre it correctly. */
+.sn03-cursor {
+  z-index: 1000;
+  line-height: 0;
+}
+
+/* Safari keeps the real pointer: hold the ↔ cursor everywhere while dragging. */
+html:has(.sn03-root[data-scrubbing]),
+html:has(.sn03-root[data-scrubbing]) * {
+  cursor: ew-resize !important;
+}
+
+.sn03-unit-popup {
+  display: flex;
+  flex-direction: column;
+  background: Canvas;
+  border: 1px solid;
+}
+.sn03-unit-item[data-highlighted] {
+  outline: 2px solid;
+}
