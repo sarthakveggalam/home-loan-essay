@@ -2,6 +2,8 @@ import type { Preview } from '@storybook/react-vite'
 
 const preview: Preview = {
   parameters: {
+    // Live work first, then the frozen history in order.
+    options: { storySort: { order: ['Essay', 'Iterations'] } },
     controls: {
       matchers: {
        color: /(background|color)$/i,

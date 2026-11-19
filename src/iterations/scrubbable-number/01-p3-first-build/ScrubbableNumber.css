@@ -1,0 +1,90 @@
+/* FROZEN iteration snapshot. Don't edit. */
+/*
+ * Structural CSS only: what the behaviour needs to work.
+ * Colours, type, the "adjustable" hint (R1) and motion are yours to design.
+ */
+
+.sn01-root {
+  position: relative;
+  display: inline-flex;
+  font-variant-numeric: tabular-nums; /* digits keep one width while scrubbing */
+}
+
+.sn01-scrub {
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Placeholder hint so the token is findable while unstyled. Replace it. */
+.sn01-display {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+/* Keyboard focus is on the hidden input; show it on the token instead. */
+.sn01-root:has(.sn01-input:focus-visible):not([data-editing]) .sn01-display {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+/* At rest: the display shows, the input is visually hidden but focusable. */
+.sn01-editor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Editing: swap them. */
+.sn01-root[data-editing] .sn01-scrub {
+  display: none;
+}
+.sn01-root[data-editing] .sn01-editor {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25em;
+}
+
+.sn01-input {
+  font: inherit;
+  width: 10ch;
+}
+
+/* Presets (R9): visible while scrubbing, or when opened by a click (T1). */
+.sn01-presets {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  display: none;
+  gap: 0.25em;
+  white-space: nowrap;
+  font-size: 0.75em;
+}
+.sn01-root[data-scrubbing] .sn01-presets,
+.sn01-presets[data-open] {
+  display: flex;
+}
+.sn01-root[data-scrubbing] .sn01-presets {
+  pointer-events: none; /* indicative only while dragging */
+}
+.sn01-presets [data-current] {
+  font-weight: bold;
+}
+
+.sn01-unit-popup {
+  display: flex;
+  flex-direction: column;
+  background: Canvas;
+  border: 1px solid;
+}
+.sn01-unit-item[data-highlighted] {
+  outline: 2px solid;
+}
