@@ -5,7 +5,8 @@
 
 .sn-root {
   position: relative;
-  display: inline-flex;
+  display: inline-block;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums; /* digits keep one width while scrubbing */
 }
 
@@ -27,6 +28,23 @@
   outline-offset: 2px;
 }
 
+/* Hover signifier: the drag pill, under the token. Absolutely positioned, so nothing moves.
+   Only on devices that can hover; hidden while dragging (the cursor takes over) and editing. */
+.sn-handle {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% -4px;
+  line-height: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+@media (hover: hover) {
+  .sn-root:hover:not([data-editing], [data-scrubbing]) .sn-handle {
+    opacity: 1;
+  }
+}
+
 /* At rest: the display shows, the input is visually hidden but focusable. */
 .sn-editor {
   position: absolute;
@@ -37,7 +55,7 @@
   white-space: nowrap;
 }
 
-/* Editing: swap them. */
+/* Editing: swap them. The editor is plain inline text, like the display it replaces. */
 .sn-root[data-editing] .sn-scrub {
   display: none;
 }
@@ -47,28 +65,63 @@
   height: auto;
   overflow: visible;
   clip-path: none;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.25em;
 }
 
+/* Auto-sizing input: the hidden copy and the input sit in the same grid cell,
+   so the cell is as wide as the text and the input fills it. */
+.sn-field {
+  display: inline-grid;
+}
+.sn-field > * {
+  grid-area: 1 / 1;
+}
+.sn-mirror {
+  visibility: hidden;
+  white-space: pre;
+}
 .sn-input {
+  /* Inherit everything, add nothing: same glyphs, same width, same height. */
   font: inherit;
-  width: 10ch;
+  letter-spacing: inherit;
+  font-variant-numeric: inherit;
+  color: inherit;
+  line-height: inherit;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+}
+/* Placeholder editing signifier. An outline takes no space, so nothing moves. */
+.sn-root[data-editing] .sn-field {
+  outline: 2px solid;
+  outline-offset: 1px;
+}
+.sn-input:focus {
+  outline: none;
 }
 
-/* Presets (R9): open on drag and stay open after release, so values can be picked. */
+/* The unit menu trigger looks like the word itself. */
+.sn-unit-trigger {
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: none;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+/* Presets popover (R9). Portaled to <body>, so it sets its own size. */
 .sn-presets {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  display: none;
+  display: flex;
   gap: 0.25em;
   white-space: nowrap;
-  font-size: 0.75em;
-}
-.sn-presets[data-open] {
-  display: flex;
+  font-size: 14px;
 }
 .sn-presets [data-current] {
   font-weight: bold;

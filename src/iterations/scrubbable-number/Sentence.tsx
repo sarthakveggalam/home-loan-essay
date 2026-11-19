@@ -13,6 +13,7 @@ type AnyScrubbableNumber = React.ComponentType<{
   units: { id: string; label: string; factor: number; step?: number; largeStep?: number; smallStep?: number; format?: Intl.NumberFormatOptions }[];
   presets?: number[];
   presetsOn?: 'scrub' | 'scrub-and-click';
+  [extra: string]: unknown;
 }>;
 
 export const rupees = [
@@ -28,7 +29,14 @@ export const tenure = [
 export const amountPresets = [20_00_000, 30_00_000, 50_00_000, 75_00_000, 1_00_00_000, 1_50_00_000];
 
 /** Beat 1 of the essay, rendered with whichever iteration you pass in. */
-export function Sentence({ Component }: { Component: AnyScrubbableNumber }) {
+export function Sentence({
+  Component,
+  amountProps,
+}: {
+  Component: AnyScrubbableNumber;
+  /** Extra props for the amount only, for iterations that added them (04: curve, snap, labels). */
+  amountProps?: Record<string, unknown>;
+}) {
   const [amount, setAmount] = React.useState(50_00_000);
   const [rate, setRate] = React.useState(7.5);
   const [months, setMonths] = React.useState(240);
@@ -36,7 +44,7 @@ export function Sentence({ Component }: { Component: AnyScrubbableNumber }) {
     <p style={{ fontSize: 24, lineHeight: 1.6, maxWidth: '36em', paddingTop: 48 }}>
       Say you’re borrowing{' '}
       <Component label="Loan amount" prefix="₹" units={rupees} min={5_00_000} max={5_00_00_000}
-        value={amount} onValueChange={setAmount} presets={amountPresets} />{' '}
+        value={amount} onValueChange={setAmount} presets={amountPresets} {...amountProps} />{' '}
       at{' '}
       <Component label="Interest rate" units={percent} min={5} max={15} value={rate} onValueChange={setRate} />{' '}
       for{' '}

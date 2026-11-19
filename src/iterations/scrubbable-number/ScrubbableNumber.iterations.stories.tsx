@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ScrubbableNumber as V01 } from './01-p3-first-build/ScrubbableNumber';
 import { ScrubbableNumber as V02 } from './02-drag-cursor-pickable-values/ScrubbableNumber';
 import { ScrubbableNumber as V03 } from './03-visible-drag-handle/ScrubbableNumber';
+import { ScrubbableNumber as V04 } from './04-range-drag-hover-same-size-edit/ScrubbableNumber';
+import { shortInr, snapAmount } from '../../lib/format';
 import { Sentence } from './Sentence';
 
 /**
@@ -69,8 +71,49 @@ export const V02_DragCursorPickableValues: Story = {
  * text. The root renders as a span, so the token is valid HTML inside a sentence.
  *
  * **Try:** drag the amount in Chrome or Firefox. Safari shows its own ↔ cursor instead.
+ *
+ * **Known issues, kept on purpose:** a fixed ₹1 lakh per few pixels, so ₹5 crore is a long way;
+ * the common amounts take a lot of space; double-click makes the input much wider (fixed in 04).
  */
 export const V03_VisibleDragHandle: Story = {
   name: '03 · Visible drag handle',
   render: () => <Sentence Component={V03} />,
+};
+
+/**
+ * **Feedback on 03:** the drag should be based on the number's min and max; the common amounts
+ * take too much space ("20L, 50L"); try the popover and the drag handle on hover; double-click
+ * makes the input so big that everything is pushed out.
+ *
+ * **Decided:**
+ * - The drag runs along an invisible 300 px track from min to max. Not the token's width:
+ *   120 px across 495 lakh steps would be 4 steps per pixel. The amount uses a log curve, so
+ *   each pixel changes it by about 1.5% (about ₹1L near ₹50L, ₹10L near ₹5Cr). It snaps to
+ *   ₹1L below ₹1Cr and ₹5L above. Shift is 4× faster, Alt 10× finer.
+ * - Short labels (20L, 1.5Cr); screen readers still hear "₹20,00,000".
+ * - Hover shows the drag pill under the token at once. The common amounts open after the pointer
+ *   rests 400 ms, and stay open while you move into them. Use the control to try 0 ms.
+ * - Editing keeps the exact width and height: the input sizes itself to its text, and the unit
+ *   menu looks like the unit word.
+ *
+ * **Try:** drag ₹50L about 100 px right (≈ ₹2.3Cr) and back. Hover and rest. Double-click "20 years".
+ *
+ * **Known issue:** the common amounts can't be reached with the keyboard yet.
+ */
+export const V04_RangeDragHoverSameSizeEdit: StoryObj<{ presetsHoverDelay: number }> = {
+  name: '04 · Range drag, hover, same-size edit',
+  args: { presetsHoverDelay: 400 },
+  argTypes: {
+    presetsHoverDelay: {
+      name: 'Presets open after hovering (ms)',
+      control: { type: 'inline-radio' },
+      options: [0, 400],
+    },
+  },
+  render: ({ presetsHoverDelay }) => (
+    <Sentence
+      Component={V04}
+      amountProps={{ curve: 'log', snap: snapAmount, presetLabel: shortInr, presetsHoverDelay }}
+    />
+  ),
 };

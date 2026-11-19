@@ -13,6 +13,10 @@ export default defineConfig({
   plugins: [react()],
   test: {
     projects: [{
+      // Pure logic (drag maths, formatting), no browser needed.
+      extends: true,
+      test: { name: 'unit', include: ['src/**/*.test.ts'], environment: 'node' },
+    }, {
       extends: true,
       plugins: [
       // The plugin will run tests for the stories defined in your Storybook config

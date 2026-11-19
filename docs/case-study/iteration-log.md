@@ -18,6 +18,7 @@ Every component iteration is frozen in Storybook under **Iterations/**, so you c
 | Scrubbable number 01 · P3 first build | `Iterations/Scrubbable number/01 · P3 first build` | 7 |
 | Scrubbable number 02 · Drag cursor, pickable values | `Iterations/Scrubbable number/02 · Drag cursor, pickable values` | 8 |
 | Scrubbable number 03 · Visible drag handle | `Iterations/Scrubbable number/03 · Visible drag handle` | 9 |
+| Scrubbable number 04 · Range drag, hover, same-size edit | `Iterations/Scrubbable number/04 · Range drag, hover, same-size edit` | 10 |
 
 How a snapshot is made: when an iteration closes, copy the component into `src/iterations/<component>/<nn-name>/`, rename its CSS classes with a version prefix (`sn02-`) so versions don't clash on one page, mark it frozen, and add a story. Snapshot 01 was rebuilt after the fact by reversing the R10 changes, because the first commit already included them.
 
@@ -143,6 +144,35 @@ How a snapshot is made: when an iteration closes, copy the component into `src/i
 
 **Evidence:** Storybook `Iterations/Scrubbable number/03`. ![Before: the cursor lost in the digits](assets/2026-11-19-03-before-invisible-cursor.png)
 
+## 10 · Range-based drag, hover and a same-size editor · 2026-11-19
+
+**Tried:** The designer asked for four changes, and asked me to push back where I had a better idea:
+1. Base the drag on the number's min and max, across the width of the number.
+2. Shorten the common amounts to "20L, 50L".
+3. Show the popover and the drag handle on hover.
+4. Stop double-click from making the input so big that the sentence moves.
+
+**Pushback:**
+- **On 1:** the designer was right that the range should set the drag, but not the token's width as the distance. ₹50,00,000 is about 120 px wide, and its range has 495 lakh steps: about 4 steps per pixel, so you could never land on ₹50L. A width that changes as the number grows would also make each token feel different. We agreed on an invisible track instead: about 300 px of hand movement covers min to max, whatever the token's size. The designer's question "is the input 300 px wide?" showed the idea needed explaining. The track is a distance your hand moves, not something on screen. The pointer lock that caused trouble in entry 9 is what makes it possible here.
+- **On 3:** a popover that opens on every pass of the mouse gets noisy in an essay you're reading, and it covers the line above. So the handle shows at once, and the common amounts wait for the pointer to rest 400 ms. A Storybook control lets you compare with 0 ms.
+
+**Decided:**
+- The amount uses a log curve: each pixel changes it by about 1.5%, roughly ₹1L near ₹50L and ₹10L near ₹5Cr. It snaps to ₹1L below ₹1Cr and ₹5L above. Rate and tenure stay linear.
+- Base UI still locks the pointer and draws the cursor. Its own step-per-pixel scrubbing is switched off, and the component moves along its own track.
+- The popover is Base UI's Popover, opened from code and anchored to the token, with no trigger. That keeps clicks free for dragging and double-clicking, and Base UI still handles positioning and dismissal.
+- The editor is plain inline text. A hidden copy of the input's text sizes it, and the unit menu looks like the unit word itself.
+
+**Learned:**
+- A new automated check (token size and the position of the text after it, before and after double-click) failed at first: the token grew 144 px. An `<input>` has a built-in width of about 20 characters, which sized the layout before any CSS could. `size={1}` removed it.
+- The drag maths sits in its own module with unit tests. On a real drag, 100 px right took ₹50L to exactly ₹2.3Cr, as the formula predicts.
+
+**Evidence:**
+- Storybook `Iterations/Scrubbable number/04`.
+- ![Hover: the handle and the short common amounts](assets/2026-11-19-04-hover-presets.png)
+- ![Editing "20 years" keeps the same size](assets/2026-11-19-04-same-size-edit.png)
+
+**Known issue:** the common amounts can't be reached with the keyboard yet.
+
 ---
 
 ## Case-study threads so far
@@ -153,5 +183,6 @@ Threads worth pulling on when this becomes a write-up:
 - **Pushback that narrowed scope.** ₹ ↔ $ was dropped from the essay but kept in the component.
 - **A platform constraint that drove design.** Pointer lock shaped both the double-click logic and the sticky values strip.
 - **Copy as a state space.** Reactive jokes have to hold at every input, not just the default.
+- **Separating a hand distance from screen space.** A drag track is a distance your hand moves, not a width on screen. That idea took a question to land, and it resolved the conflict between range-based dragging and precision.
 - **Tests can't feel.** The invisible cursor passed every automated test, because headless browsers never lock the pointer. Only a person dragging found it.
 - **The thinking tool itself.** tldraw had no read-back, so the Q&A moved to a Paper board.

@@ -1,0 +1,153 @@
+/* FROZEN iteration snapshot. Don't edit. */
+/*
+ * Structural CSS only: what the behaviour needs to work.
+ * Colours, type, the "adjustable" hint (R1) and motion are yours to design.
+ */
+
+.sn04-root {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums; /* digits keep one width while scrubbing */
+}
+
+.sn04-scrub {
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Placeholder hint so the token is findable while unstyled. Replace it. */
+.sn04-display {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+/* Keyboard focus is on the hidden input; show it on the token instead. */
+.sn04-root:has(.sn04-input:focus-visible):not([data-editing]) .sn04-display {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+/* Hover signifier: the drag pill, under the token. Absolutely positioned, so nothing moves.
+   Only on devices that can hover; hidden while dragging (the cursor takes over) and editing. */
+.sn04-handle {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% -4px;
+  line-height: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+@media (hover: hover) {
+  .sn04-root:hover:not([data-editing], [data-scrubbing]) .sn04-handle {
+    opacity: 1;
+  }
+}
+
+/* At rest: the display shows, the input is visually hidden but focusable. */
+.sn04-editor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Editing: swap them. The editor is plain inline text, like the display it replaces. */
+.sn04-root[data-editing] .sn04-scrub {
+  display: none;
+}
+.sn04-root[data-editing] .sn04-editor {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+}
+
+/* Auto-sizing input: the hidden copy and the input sit in the same grid cell,
+   so the cell is as wide as the text and the input fills it. */
+.sn04-field {
+  display: inline-grid;
+}
+.sn04-field > * {
+  grid-area: 1 / 1;
+}
+.sn04-mirror {
+  visibility: hidden;
+  white-space: pre;
+}
+.sn04-input {
+  /* Inherit everything, add nothing: same glyphs, same width, same height. */
+  font: inherit;
+  letter-spacing: inherit;
+  font-variant-numeric: inherit;
+  color: inherit;
+  line-height: inherit;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+}
+/* Placeholder editing signifier. An outline takes no space, so nothing moves. */
+.sn04-root[data-editing] .sn04-field {
+  outline: 2px solid;
+  outline-offset: 1px;
+}
+.sn04-input:focus {
+  outline: none;
+}
+
+/* The unit menu trigger looks like the word itself. */
+.sn04-unit-trigger {
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: none;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+/* Presets popover (R9). Portaled to <body>, so it sets its own size. */
+.sn04-presets {
+  display: flex;
+  gap: 0.25em;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.sn04-presets [data-current] {
+  font-weight: bold;
+}
+
+/* Drag cursor. Base UI positions it (position: fixed), centres it on the pointer
+   and moves it, so no offset here. line-height: 0 keeps the box the size of the SVG,
+   which Base UI needs to centre it correctly. */
+.sn04-cursor {
+  z-index: 1000;
+  line-height: 0;
+}
+
+/* Safari keeps the real pointer: hold the ↔ cursor everywhere while dragging. */
+html:has(.sn04-root[data-scrubbing]),
+html:has(.sn04-root[data-scrubbing]) * {
+  cursor: ew-resize !important;
+}
+
+.sn04-unit-popup {
+  display: flex;
+  flex-direction: column;
+  background: Canvas;
+  border: 1px solid;
+}
+.sn04-unit-item[data-highlighted] {
+  outline: 2px solid;
+}
