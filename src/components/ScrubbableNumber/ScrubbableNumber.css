@@ -28,23 +28,6 @@
   outline-offset: 2px;
 }
 
-/* Hover signifier: the drag pill, under the token. Absolutely positioned, so nothing moves.
-   Only on devices that can hover; hidden while dragging (the cursor takes over) and editing. */
-.sn-handle {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  translate: -50% -4px;
-  line-height: 0;
-  pointer-events: none;
-  opacity: 0;
-}
-@media (hover: hover) {
-  .sn-root:hover:not([data-editing], [data-scrubbing]) .sn-handle {
-    opacity: 1;
-  }
-}
-
 /* At rest: the display shows, the input is visually hidden but focusable. */
 .sn-editor {
   position: absolute;

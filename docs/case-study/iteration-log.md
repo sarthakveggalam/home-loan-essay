@@ -175,6 +175,18 @@ How a snapshot is made: when an iteration closes, copy the component into `src/i
 
 ---
 
+## 11 · One signifier, not two · 2026-11-20
+
+**Feedback:** on hover, the black pill under the number repeated what the token already says. The dotted underline and the ↔ cursor already signal "drag me", so there were two signifiers for one action.
+
+**Decided:** removed the hover pill. The pill stays only as the drag cursor, where it replaces the locked pointer while you drag. The common amounts still open after a 400 ms rest.
+
+**Learned:** a signifier that's already carried by the cursor doesn't need a second, visual copy. Adding one makes the token busier without telling the reader anything new.
+
+**Evidence:** compare `Iterations/Scrubbable number/04` (with the hover pill) to `Essay/ScrubbableNumber` (without it).
+
+---
+
 ## Case-study threads so far
 
 Threads worth pulling on when this becomes a write-up:

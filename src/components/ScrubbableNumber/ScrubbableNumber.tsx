@@ -273,10 +273,6 @@ export function ScrubbableNumber({
           <span className="sn-digits">{formatter.format(display)}</span>
           {unit.label && <span className="sn-unit"> {unit.label}</span>}
         </span>
-        {/* Signifier on hover: the same pill you'll drag. Positioned, so nothing moves. */}
-        <span className="sn-handle" aria-hidden="true">
-          <DragPill />
-        </span>
         {/* Drawn in place of the locked pointer while dragging (Safari keeps its own cursor). */}
         <NumberField.ScrubAreaCursor className="sn-cursor">
           <DragPill />
